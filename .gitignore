@@ -1,0 +1,17 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+blob-report/
+.playwright/
+
+# TestRelic runtime dirs (commit only .testrelic/testrelic-config.json)
+.testrelic/queue/
+.testrelic/cache/
+
+# TestPulse local run history is generated; keep the demo fixtures, ignore live history
+.testpulse/history.jsonl
+
+# Secrets
+.env
+.env.local

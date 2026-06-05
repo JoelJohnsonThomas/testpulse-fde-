@@ -1,0 +1,37 @@
+{
+  "name": "testpulse",
+  "version": "0.1.0",
+  "description": "Turns a TestRelic / CTRF test run into one plain-English signal that finds the developer — flaky noise vs. real bugs, across run history. The last mile for test reports nobody reads.",
+  "type": "module",
+  "bin": {
+    "testpulse": "./bin/testpulse.mjs"
+  },
+  "scripts": {
+    "demo": "tsx src/cli.ts demo",
+    "summary": "tsx src/cli.ts",
+    "build": "tsc",
+    "test": "playwright test",
+    "test:report": "playwright show-report"
+  },
+  "keywords": [
+    "playwright",
+    "testrelic",
+    "ctrf",
+    "test-analytics",
+    "flaky-tests",
+    "cli"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "tsx": "^4.19.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@testrelic/playwright-analytics": "^2.8.0",
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.2"
+  }
+}

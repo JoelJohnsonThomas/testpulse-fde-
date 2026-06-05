@@ -1,0 +1,47 @@
+{
+  "reportFormat": "CTRF",
+  "specVersion": "0.0.0",
+  "reportId": "fixture-ctrf-001",
+  "results": {
+    "tool": { "name": "playwright" },
+    "summary": {
+      "tests": 3,
+      "passed": 1,
+      "failed": 1,
+      "skipped": 0,
+      "pending": 0,
+      "other": 0,
+      "start": 1749117600000,
+      "stop": 1749117603000
+    },
+    "environment": {
+      "appName": "acme-api",
+      "branchName": "main",
+      "commit": "def5678"
+    },
+    "tests": [
+      {
+        "name": "api > GET /health returns 200",
+        "status": "passed",
+        "duration": 120,
+        "filePath": "tests/api.spec.ts"
+      },
+      {
+        "name": "api > POST /login rejects bad password",
+        "status": "failed",
+        "duration": 340,
+        "filePath": "tests/api.spec.ts",
+        "message": "expect(received).toBe(expected)\n\nExpected: 401\nReceived: 200",
+        "trace": "Error: expect(received).toBe(expected)\n    at tests/api.spec.ts:22:30"
+      },
+      {
+        "name": "api > GET /products lists items",
+        "status": "passed",
+        "duration": 5200,
+        "flaky": true,
+        "retries": 2,
+        "filePath": "tests/api.spec.ts"
+      }
+    ]
+  }
+}

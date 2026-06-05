@@ -1,0 +1,14 @@
+{
+  "cloud": {
+    "apiKey": "$TESTRELIC_API_KEY",
+    "endpoint": "https://platform.testrelic.ai/api/v1",
+    "upload": "batch"
+  },
+  "testrelic-repo": {
+    "name": "testpulse-fde"
+  },
+  "queue": {
+    "maxAge": "7d",
+    "directory": ".testrelic/queue"
+  }
+}

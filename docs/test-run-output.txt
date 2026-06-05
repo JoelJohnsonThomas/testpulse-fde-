@@ -1,0 +1,68 @@
+
+Running 32 tests using 4 workers
+
+  ok  2 tests\analyze.spec.ts:74:3 › analyze — signal vs. noise › a test failing on a sustained recent streak is "still broken" (persistent), not new (45ms)
+  ok  1 tests\analyze.spec.ts:79:3 › analyze — signal vs. noise › a passing test much slower than its own history is flagged as a slow regression (53ms)
+  ok  5 tests\analyze.spec.ts:84:3 › analyze — signal vs. noise › a never-before-seen failing test is treated as a real bug until proven otherwise (29ms)
+  ok  6 tests\analyze.spec.ts:91:3 › analyze — signal vs. noise › counts and totals are tallied correctly (35ms)
+  ok  3 tests\analyze.spec.ts:56:3 › analyze — signal vs. noise › a test that passed every prior run and just failed is flagged as a NEW real bug (76ms)
+  ok  4 tests\analyze.spec.ts:64:3 › analyze — signal vs. noise › a test that flaps between pass and fail is classified as flaky noise, not a real bug (75ms)
+  ok  7 tests\analyze.spec.ts:98:3 › analyze — signal vs. noise › an SDK-reported flaky status is always treated as flaky regardless of history (18ms)
+  ok 10 tests\cli.spec.ts:40:3 › cli — the real entry point a developer types › `--fail-on new-bug` exits non-zero so CI can gate on a real regression (1.2s)
+  ok 11 tests\cli.spec.ts:54:3 › cli — the real entry point a developer types › without --fail-on, a failing report still exits 0 (TestPulse informs, it does not block by default) (1.2s)
+  ok  8 tests\cli.spec.ts:32:3 › cli — the real entry point a developer types › `--format json` emits valid, parseable JSON (1.2s)
+  ok  9 tests\cli.spec.ts:25:3 › cli — the real entry point a developer types › `testpulse demo` runs with zero setup and prints a plain-English signal (1.3s)
+  ok 15 tests\parse.spec.ts:10:3 › parse — normalizing real report formats › normalizes a TestRelic analytics-timeline.json into a flat test list with correct statuses (53ms)
+  x  14 tests\intentional-failure.spec.ts:41:1 › summary routes a new failure to a code owner @planned-feature (31ms)
+  ok 16 tests\parse.spec.ts:27:3 › parse — normalizing real report formats › extracts a failure into message + file:line + snippet, stripping ANSI and stack noise (39ms)
+  ok 17 tests\parse.spec.ts:55:3 › parse — normalizing real report formats › deduplicates retries of the same test, keeping the most severe outcome (20ms)
+  ok 12 tests\cli.spec.ts:60:3 › cli — the real entry point a developer types › a missing report file fails clearly with a non-crash exit code (655ms)
+  ok 13 tests\cli.spec.ts:66:3 › cli — the real entry point a developer types › `help` prints usage (672ms)
+  ok 18 tests\parse.spec.ts:75:3 › parse — normalizing real report formats › rejects an unrecognized format with a clear, actionable error (68ms)
+  ok 19 tests\parse.spec.ts:80:3 › parse — normalizing real report formats › firstMeaningfulLine skips blank lines and strips ANSI (with and without the ESC byte) (19ms)
+  ok 20 tests\plain-english.spec.ts:16:3 › plain-english — translating failures for non-QA developers › a Playwright timeout becomes a plain explanation, not a stack trace (20ms)
+  ok 21 tests\plain-english.spec.ts:25:3 › plain-english — translating failures for non-QA developers › an assertion mismatch is described as a behavior mismatch (13ms)
+  ok 23 tests\plain-english.spec.ts:46:3 › plain-english — translating failures for non-QA developers › flaky copy reassures the developer it is noise, citing the pass rate (14ms)
+  ok 22 tests\plain-english.spec.ts:40:3 › plain-english — translating failures for non-QA developers › an unknown error falls back to the raw first line, never silently dropped (11ms)
+  ok 24 tests\plain-english.spec.ts:32:3 › plain-english — translating failures for non-QA developers › a network error is described as the app/endpoint not responding (30ms)
+  ok 25 tests\plain-english.spec.ts:53:3 › plain-english — translating failures for non-QA developers › verdict labels and duration formatting are human-friendly (22ms)
+  ok 26 tests\summarize.spec.ts:18:3 › summarize — the signal a developer actually reads › headline leads with the real bug and a red marker (49ms)
+  ok 28 tests\summarize.spec.ts:25:3 › summarize — the signal a developer actually reads › all-green run produces a clean, reassuring headline (31ms)
+  ok 27 tests\summarize.spec.ts:31:3 › summarize — the signal a developer actually reads › markdown output has a Fix-first section, the test name, location and a next step (46ms)
+  ok 29 tests\summarize.spec.ts:40:3 › summarize — the signal a developer actually reads › text output is plain and scannable (30ms)
+  ok 31 tests\summarize.spec.ts:46:3 › summarize — the signal a developer actually reads › json output is valid and machine-consumable for CI gating (41ms)
+  ok 30 tests\summarize.spec.ts:54:3 › summarize — the signal a developer actually reads › slackify converts our markdown to Slack mrkdwn (no ### headings, * for bold, <url|text> links) (40ms)
+  ok 32 tests\parse.spec.ts:41:3 › parse — normalizing real report formats › normalizes a CTRF report and treats flaky:true as flaky even when status is passed (59ms)
+
+
+  1) tests\intentional-failure.spec.ts:41:1 › summary routes a new failure to a code owner @planned-feature 
+
+    Error: TestPulse should name a code owner for each new bug so the right person sees it
+
+    [2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m
+
+    Expected substring: [32m"Owner:"[39m
+    Received string:    [31m"## 🔴 1 new failure that looks like a real bug · ✅ 0 passed·[39m
+    [31m**0 passed · 1 failed · 0 flaky · 0 skipped** out of 1 tests.·[39m
+    [31m### 🔴 Fix first — new failures that look like real bugs[39m
+    [31m- **checkout.spec.ts > applies discount code** — _Likely a REAL bug (new failure)_[39m
+    [31m  - The test expected one value but the app produced a different one. This is a behavior mismatch — the app is doing something other than what the test says it should. There is no prior history for this test yet, so treat the failure as real until proven otherwise.[39m
+    [31m  - `tests/checkout.spec.ts:63`[39m
+    [31m  - 👉 Open the diff since the last green run and check the code touching this test (tests/checkout.spec.ts:63). This is the one to fix first.[39m
+    [31m---[39m
+    [31mSlowest this run: `applies discount code` (100ms).·[39m
+    [31m<sub>Run `intentional` · main · compared against 0 prior runs · generated by TestPulse</sub>"[39m
+
+      44 |
+      45 |   // PLANNED, NOT YET IMPLEMENTED — this assertion is expected to fail today.
+    > 46 |   expect(md, 'TestPulse should name a code owner for each new bug so the right person sees it').toContain('Owner:');
+         |                                                                                                 ^
+      47 | });
+      48 |
+        at E:\CSE\External\Assignment\testpulse-fde\tests\intentional-failure.spec.ts:46:97
+
+    Error Context: test-results\intentional-failure-summar-79072--code-owner-planned-feature\error-context.md
+
+  1 failed
+    tests\intentional-failure.spec.ts:41:1 › summary routes a new failure to a code owner @planned-feature 
+  31 passed (11.4s)

@@ -1,0 +1,82 @@
+{
+  "schemaVersion": "1.3.0",
+  "testRunId": "fixture-tr-001",
+  "startedAt": "2026-06-05T10:00:00.000Z",
+  "completedAt": "2026-06-05T10:00:04.000Z",
+  "totalDuration": 4000,
+  "summary": { "total": 4, "passed": 2, "failed": 1, "flaky": 1, "skipped": 0 },
+  "ci": { "provider": "github-actions", "buildId": "42", "commitSha": "abc1234", "branch": "main" },
+  "metadata": { "repo": "acme-web" },
+  "timeline": [
+    {
+      "url": "https://acme.test/checkout",
+      "navigationType": "goto",
+      "visitedAt": "2026-06-05T10:00:00.500Z",
+      "duration": 200,
+      "specFile": "tests/checkout.spec.ts",
+      "domContentLoadedAt": null,
+      "networkIdleAt": null,
+      "networkStats": null,
+      "tests": [
+        {
+          "title": "checkout.spec.ts > checkout > shows correct total",
+          "status": "passed",
+          "duration": 1200,
+          "startedAt": "2026-06-05T10:00:00.500Z",
+          "completedAt": "2026-06-05T10:00:01.700Z",
+          "retryCount": 0,
+          "tags": [],
+          "failure": null
+        },
+        {
+          "title": "checkout.spec.ts > checkout > applies discount code",
+          "status": "failed",
+          "duration": 1300,
+          "startedAt": "2026-06-05T10:00:01.700Z",
+          "completedAt": "2026-06-05T10:00:03.000Z",
+          "retryCount": 0,
+          "tags": [],
+          "failure": {
+            "message": "expect(received).toHaveText(expected)\n\nExpected string: \"Total: $80.00\"\nReceived string: \"Total: $100.00\"",
+            "line": 63,
+            "code": "  62 |   await page.click(\"#apply-code\");\n> 63 |   await expect(page.locator(\"#total\")).toHaveText(\"Total: $80.00\");",
+            "stack": "at tests/checkout.spec.ts:63:42\n  at Object.<anonymous> (node_modules/...)"
+          }
+        }
+      ]
+    },
+    {
+      "url": "https://acme.test/search",
+      "navigationType": "goto",
+      "visitedAt": "2026-06-05T10:00:03.000Z",
+      "duration": 150,
+      "specFile": "tests/search.spec.ts",
+      "domContentLoadedAt": null,
+      "networkIdleAt": null,
+      "networkStats": null,
+      "tests": [
+        {
+          "title": "search.spec.ts > search > shows results",
+          "status": "flaky",
+          "duration": 900,
+          "startedAt": "2026-06-05T10:00:03.000Z",
+          "completedAt": "2026-06-05T10:00:03.900Z",
+          "retryCount": 1,
+          "tags": [],
+          "failure": null
+        },
+        {
+          "title": "search.spec.ts > search > loads homepage",
+          "status": "passed",
+          "duration": 600,
+          "startedAt": "2026-06-05T10:00:03.900Z",
+          "completedAt": "2026-06-05T10:00:04.500Z",
+          "retryCount": 0,
+          "tags": [],
+          "failure": null
+        }
+      ]
+    }
+  ],
+  "shardRunIds": null
+}

@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Runs the Playwright suite. The TestRelic reporter uploads results to the
+      # cloud dashboard because TESTRELIC_API_KEY is provided as a repo secret.
+      # The intentional-failure test is expected to fail, so we don't fail the
+      # whole job on the test step — TestPulse then turns the run into a signal.
+      - name: Run tests (uploads to TestRelic)
+        id: tests
+        continue-on-error: true
+        env:
+          TESTRELIC_API_KEY: ${{ secrets.TESTRELIC_API_KEY }}
+        run: npm test
+
+      # The product dogfooding the product: summarize our own run in plain English
+      # and gate the build only on a *new* real regression (flaky noise never blocks).
+      - name: TestPulse summary
+        if: always()
+        run: |
+          node bin/testpulse.mjs test-results/analytics-timeline.json \
+            --format md --out testpulse-summary.md --fail-on new-bug || true
+          cat testpulse-summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Post summary to Slack
+        if: always() && env.SLACK_WEBHOOK_URL != ''
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: node bin/testpulse.mjs test-results/analytics-timeline.json --slack || true
+
+      - name: Upload report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: testrelic-report
+          path: test-results/
+          if-no-files-found: ignore
