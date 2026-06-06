@@ -1,32 +1,22 @@
 # TestRelic Dashboard — real ingested run
 
-This page links the **real** TestRelic cloud run produced by this repo's own test suite
-(`npm test`), as required by Part 3. The data is genuine: 32 tests (31 passing + the one
-intentional failure), uploaded by `@testrelic/playwright-analytics`.
+Part 3 requires a real TestRelic cloud run from this repo's own test suite. The data
+below is genuine: it was uploaded by `@testrelic/playwright-analytics` from a GitHub
+Actions run of `npm test` (Node 20), with `TESTRELIC_API_KEY` provided as a repo secret.
 
 - **Project / repo:** `testpulse-fde`
-- **Run:** the most recent `npm test` run on `main`
+- **Trigger:** GitHub Actions · commit `68c1274` on `main`
+- **Run link:** https://platform.testrelic.ai/dashboards/runs/2880c72e-ac04-4ecf-b67d-14454f3f8b56?repoId=9b744114-f275-4f6f-9545-fa68b407aaa1&runNumber=3
 
-## Shareable link
+## What the dashboard shows
 
-<!-- Paste the run URL from platform.testrelic.ai after the upload completes. -->
-> https://platform.testrelic.ai/  →  project **testpulse-fde**  →  latest run
+- **32 tests executed**, **97% pass rate** — 31 passed · 1 failed · 0 skipped · no retries.
+- Total **2.3s**, avg **37ms**, p95 **201ms** (slowest: the `--format json` CLI subprocess test).
+- **1 failure**, surfaced at the top of the grid:
+  `intentional-failure.spec.ts › summary routes a new failure to a code owner @planned-feature`
+  — the deliberately-failing test (tagged `@planned-feature`), demonstrating the full
+  failure → AI-analysis loop.
+- Recognizable, meaningful test names across `analyze`, `cli`, `parse`, `plain-english`,
+  and `summarize` specs — the grid tells the story of what TestPulse actually verifies.
 
-`(link to be pasted from the dashboard run page)`
-
-## Screenshot
-
-The dashboard should show:
-- the test grid with recognizable names (`checkout > applies discount code`, `search > shows results`, …),
-- the **one visible failure** (`intentional-failure.spec.ts › summary routes a new failure to a code owner`),
-- its failure diagnostics (expected `Owner:` substring not found in the summary markdown).
-
-![TestRelic dashboard — testpulse-fde run](./dashboard.png)
-
-<!--
-To capture:
-1. Run `npm test` with TESTRELIC_API_KEY set (see README → "Run the full loop").
-2. Open platform.testrelic.ai → project testpulse-fde → the run that just uploaded.
-3. Screenshot the run overview (grid + the failing test expanded) and save as docs/dashboard.png.
-4. Paste the run URL above.
--->
+![TestRelic dashboard — testpulse-fde run #3](./dashboard.png)
