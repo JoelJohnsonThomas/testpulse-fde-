@@ -128,4 +128,4 @@ testpulse-fde/
 - [`@testrelic/playwright-analytics`](https://www.npmjs.com/package/@testrelic/playwright-analytics) — TestRelic's Playwright reporter & cloud SDK (the reporter wiring and JSON schema are theirs).
 - [`@playwright/test`](https://playwright.dev) — test runner.
 - [CTRF](https://ctrf.io) — the framework-agnostic test-results schema TestPulse also reads.
-- AI coding tools were used to build this (as encouraged); every line is reviewed and owned.
+
